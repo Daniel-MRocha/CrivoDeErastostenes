@@ -10,7 +10,7 @@ public class BootApp {
 
         Processamento proc = new Processamento(numero);
         proc.setLimite();
-        proc.primosAteARaiz();
+        proc.resultadoPrimos();
 
     }
 }
