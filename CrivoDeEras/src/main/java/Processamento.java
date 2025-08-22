@@ -10,11 +10,9 @@ public class Processamento {
     private double limiteRaizDeN;
 
 
-    public Processamento(int numeroN){
-        this.numeroN =  numeroN;
-    }
+    public Processamento(){}
 
-    public void setLimite(){
+    private void setLimite(){
         this.limiteRaizDeN = Math.sqrt(numeroN);
     }
 
@@ -24,7 +22,7 @@ public class Processamento {
                     .collect(Collectors.toCollection(ArrayList::new));
     }
 
-    public ArrayList<Integer> primosAteARaiz(){
+    private ArrayList<Integer> primosAteARaiz(){
 
         long limite = (long) limiteRaizDeN + 1;
 
@@ -48,24 +46,22 @@ public class Processamento {
         return primos;
     }
 
-    public void resultadoPrimos(){
+    public ArrayList<Integer> resultadoPrimos(int numeroN){
+        this.numeroN = numeroN;
+        setLimite();
         ArrayList<Integer> listaDePrimos = primosAteARaiz();
-        ArrayList<Integer> listaAuxiliar = listaInicial();
-        ArrayList<Integer> multiplos = new ArrayList<>();
+        ArrayList<Integer> listaProcessada = listaInicial();
 
         for(int crivo : listaDePrimos){
-            ArrayList <Integer> multiplosDinamicos = listaAuxiliar.stream()
+            ArrayList <Integer> multiplosDinamicos = listaProcessada.stream()
                     .filter(ele -> ele % crivo == 0)
                     .filter(ele -> ele != crivo)
                     .distinct()
                     .collect(Collectors.toCollection(ArrayList::new));
-
-            multiplos.addAll(multiplosDinamicos);
+            listaProcessada.removeAll(multiplosDinamicos);
         }
-
-        listaAuxiliar.removeAll(multiplos);
-        listaAuxiliar.remove(0);
-        listaAuxiliar.stream().forEach(ele -> System.out.print(ele + " | "));
+        listaProcessada.remove(0);
+        return listaProcessada;
      }
 
     }
